@@ -1,3 +1,6 @@
+# Este documento sirve para crear un pequeño corpus de artículos de crítica de arte y comprobar que los métodos 
+# aplicados al lado sirven para filtrarlos.
+
 library(stringr)
 
 # Leo los marcadores y elimino los tres primeros porque no se corresponden a enlaces de noticias
@@ -18,10 +21,10 @@ enlaces <- substr(critica, 26, posicion.add)
 print(enlaces)
 
 
-# Scraping por medio
+# Scraping
 library(rvest)
 
-## Elpais
+critica.df <- data.frame()
 
 for (i in 1:length(enlaces)) {
   ## ARTICULO
@@ -30,14 +33,14 @@ for (i in 1:length(enlaces)) {
   text<-html_text(nodes)
   text<-str_replace_all(text, "[\r\n]" , "")
   text<-paste(text, collapse = "")
-  noticias.df[i,1]<-text
+  critica.df[i,1]<-text
   
   ## AUTOR
   nodes<-html_nodes(html, "span.autor-nombre")
   text<-html_text(nodes)
   text<-str_replace_all(text, "[\r\n]" , "")
   text<-paste(text, sep=";", collapse=";")
-  noticias.df[i,2]<-text
+  critica.df[i,2]<-text
   
   ## FECHA
   nodes<-html_nodes(html, ".articulo-actualizado a")
@@ -47,9 +50,9 @@ for (i in 1:length(enlaces)) {
     text<-html_text(nodes)
     text<-str_replace_all(text, "[\r\n]" , "")
     text<- substr(text, 1,10)
-    # Me he encontrado un error con la p?ginas que se actualizan, hay fechas
+    # Me he encontrado un error con la páginas que se actualizan, hay fechas
     # repetidas, luego le inserto la primera y listo.
-    noticias.df[i,3]<-text[1]
+    critica.df[i,3]<-text[1]
     
     ## TITULAR
     nodes<-html_nodes(html, "h1#articulo-titulo.articulo-titulo")
@@ -58,7 +61,21 @@ for (i in 1:length(enlaces)) {
       next()
     } else{
       text<-html_text(nodes)
-      noticias.df[i,4]<-text
+      critica.df[i,4]<-text
     }
   }
 }
+
+# Nombres de columnas
+colnames(critica.df)<-c("artículo", "autor", "fecha", "titular")
+
+## Eliminar registros que no se corresponden a noticias
+registros.vacios.v<-which(critica.df$artículo == "")
+critica.df<-critica.df[-registros.vacios.v,]
+
+## Dejar todo en min?sculas
+critica.df$artículo<-tolower(critica.df$artículo)
+critica.df$autor<-tolower(critica.df$autor)
+critica.df$fecha<-tolower(critica.df$fecha)
+critica.df$titular<-tolower(critica.df$titular)
+
