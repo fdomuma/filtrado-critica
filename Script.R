@@ -2,20 +2,60 @@
 # coger tan solo 80 aleatorios de entre esos. 
 
 
-# Me tengo que asegurar de que este es un buen método para extraer televisión como tema. Cine se puede estar mezclando
+
+
+# Preparo algunos de television/cine
+
+# Me tengo que asegurar de que este es un buen mÃ©todo para extraer televisión como tema. Cine se puede estar mezclando
 # aunque también podría dejarlo así de momento porque de todas formas se diferencia bastante bien de crítica de arte.
 # Que es exactamente lo que voy a hacer para una primera prueba, los temas no tienen porqué estar separados extremadamente
 # separados.
 
 television <- Reduce(union, list(grep("television", noticias.df$url),
-                       sample(grep("cinetv", noticias.df$url), 80),
-                       grep("netflix", noticias.df$url),
-                       grep("peliculas", noticias.df$url)))
+                                 sample(grep("cinetv", noticias.df$url), 80),
+                                 grep("netflix", noticias.df$url),
+                                 grep("peliculas", noticias.df$url)))
+
+television <- noticias.df[television, c("articulo", "autor", "fecha", "titular", "medio")]
+television$medio <- "television"
+
+# Preparo algunos de toreo
+
+toros <- Reduce(union, list(grep("television", noticias.df$url),
+                            sample(grep("cinetv", noticias.df$url), 80),
+                            grep("netflix", noticias.df$url),
+                            grep("peliculas", noticias.df$url)))
+
+
+# Preparo algunos de literatura
+
+libros <- Reduce(union, list(grep("television", noticias.df$url),
+                             sample(grep("cinetv", noticias.df$url), 80),
+                             grep("netflix", noticias.df$url),
+                             grep("peliculas", noticias.df$url)))
+
+# Preparo algunos de política 
+
+politica <- Reduce(union, list(grep("television", noticias.df$url),
+                               sample(grep("cinetv", noticias.df$url), 80),
+                               grep("netflix", noticias.df$url),
+                               grep("peliculas", noticias.df$url)))
+
+# Preparo algunos de musica
+
+musica <- Reduce(union, list(grep("television", noticias.df$url),
+                             sample(grep("cinetv", noticias.df$url), 80),
+                             grep("netflix", noticias.df$url),
+                             grep("peliculas", noticias.df$url)))
+
+
+# Junto todos los temas
 
 critica.df <- cbind(critica.df, "elpais")
 
 colnames(critica.df)[5] <- "medio"
+colnames(critica.df)[1] <- "articulo"
 
-critica.df <- rbind(noticias.df[television, c("articulo", "autor", "fecha", "titular", "medio")])
+corpus <- rbind(critica.df, television, toros, libros, musica, politica)
 
-write.csv(critica.df, "noticias.csv")
+write.csv(corpus, "noticias.csv")
