@@ -68,7 +68,8 @@ for (i in 1:length(enlaces)) {
 
 # Nombres de columnas
 critica.df[5] <- "elpais"
-colnames(critica.df)<-c("artículo", "autor", "fecha", "titular", "medio")
+critica.df[6] <- "critica de arte"
+colnames(critica.df)<-c("artículo", "autor", "fecha", "titular", "medio", "tema")
 
 ## Eliminar registros que no se corresponden a noticias
 registros.vacios.v<-which(critica.df$artículo == "")
