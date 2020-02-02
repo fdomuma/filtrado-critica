@@ -1,7 +1,30 @@
+
+
+
+
+
+
+
+
+
+# Por la nueva distribución que he planteado, este script se va a quedar como tanteo previo y 
+# no como parte definitiva del proyecto.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # En los url se indica la pertenencia a la sección televisión, la sobrerrepresentación de LL en el corpus me ha hecho
 # coger tan solo 80 aleatorios de entre esos. 
-
-
 
 
 # Preparo algunos de television/cine
@@ -16,7 +39,7 @@ television <- Reduce(union, list(grep("television", noticias.df$url),
                                  grep("netflix", noticias.df$url),
                                  grep("peliculas", noticias.df$url)))
 
-television <- noticias.df[television, c("articulo", "autor", "fecha", "titular", "medio")]
+television <- noticias.df[television, c("articulo", "autor", "fecha", "titular", "medio", "medio")]
 television$medio <- "television"
 
 # Preparo algunos de toreo
@@ -49,6 +72,9 @@ musica <- Reduce(union, list(grep("television", noticias.df$url),
                              grep("peliculas", noticias.df$url)))
 
 
+# Compruebo los pesos
+
+
 # Junto todos los temas
 
 critica.df <- cbind(critica.df, "elpais")
@@ -57,5 +83,7 @@ colnames(critica.df)[5] <- "medio"
 colnames(critica.df)[1] <- "articulo"
 
 corpus <- rbind(critica.df, television, toros, libros, musica, politica)
+corpus$medio <- gsub("elpais", "critica de arte", corpus$medio)
+
 
 write.csv(corpus, "noticias.csv")
