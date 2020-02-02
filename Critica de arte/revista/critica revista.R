@@ -71,3 +71,44 @@ BDD$articulo <- gsub("[\r\n]", "", BDD$articulo)
 critica.revista <- BDD
 
 rm(list = setdiff(ls(), "critica.revista"))
+
+
+
+# Añado cuatro fragmentos de lápiz para completar un poco el corpus y extraigo los artículos
+
+enlaces <- c("http://www.revistalapiz.com/serialidad/", 
+             "http://www.revistalapiz.com/arte-y-accion/",
+             "http://www.revistalapiz.com/arte-e-hipervisualidad/",
+             "http://www.revistalapiz.com/los-inicios-del-videoarte/")
+
+autores <- c("Jaime Gili", "Manuel Cirauqui", "Adolfo Montejo Navas", "Mercedes Vicente")
+
+# He hecho un código ad hoc, pero funciona así que no me voy a preocupar en exceso. 
+# De reutilizar el código habría que arreglarlo.
+
+for (i in 36:39){
+  html <- read_html(enlaces[i-35])
+  
+  nodes <- html_nodes(html, "div.entry-content>p")
+  articulo <- html_text(nodes[1:(length(nodes)-5)])
+  critica.revista[i,1] <- paste(articulo, collapse = " ")
+  
+  critica.revista[i,2] <- autores[i-35]
+  
+  critica.revista[i,3] <- " "
+  
+  nodes <- html_nodes(html, "h1.entry-title")
+  critica.revista[i,4] <- html_text(nodes)
+  
+  critica.revista[i,5] <- "lapiz"
+  
+  critica.revista[i,6] <- "critica de arte"
+  
+  Sys.sleep(1.5)
+}
+
+# Eliminamos saltos de línea
+critica.revista$articulo <- gsub("[\r\n]", "", critica.revista$articulo)
+
+# Limpiamos el entorno
+rm(list = setdiff(ls(), "critica.revista"))
