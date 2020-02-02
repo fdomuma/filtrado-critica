@@ -1,0 +1,5 @@
+He dividido la representación del corpus de entrenamiento por tipo de medio: periódico, blog o revista especializada y por temas:
+toreo, televisión, crítica, política, música, cine/televisión. Estoy planteando una representación de 30 artículos por medio y tema.
+
+Debido a esto, aún no he empezado a distinguir entre el periódico en el que se escribe como sí hice en el TFM, pero lo tendré en cuenta
+a la hora de filtrar los 30 de cada tema que pasen al corpus de entrenamiento.
