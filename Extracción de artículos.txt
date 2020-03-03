@@ -3,3 +3,9 @@ toreo, televisión, crítica, política, música, cine/televisión. Estoy plante
 
 Debido a esto, aún no he empezado a distinguir entre el periódico en el que se escribe como sí hice en el TFM, pero lo tendré en cuenta
 a la hora de filtrar los 30 de cada tema que pasen al corpus de entrenamiento.
+
+Quizá no me hace tanta falta especificar cómo son el resto de temas salvo critica siempre y cuando este esté muy bien definido.
+
+Corrijo: No tiene sentido sacar artículos de blog cuando el scrapeo de después se va a hacer sobre periódicos. No necesito que el modelo
+reconozca una crítica de arte de un input que no va a tener.
+
