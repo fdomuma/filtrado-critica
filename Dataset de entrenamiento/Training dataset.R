@@ -25,4 +25,4 @@ entrenamiento <- bind_rows(entrenamiento, sample_n(television, 10)) # Sólo sale
 table(toreo$medio)
 entrenamiento <- bind_rows(entrenamiento, sample_n(toreo, 40))
 
-rm(list=setdiff(ls(), "entrenamiento"))
+write.csv(entrenamiento, "entrenamiento")
