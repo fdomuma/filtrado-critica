@@ -86,4 +86,4 @@ corpus <- rbind(critica.df, television, toros, libros, musica, politica)
 corpus$medio <- gsub("elpais", "critica de arte", corpus$medio)
 
 
-write.csv(corpus, "noticias.csv")
+write.csv(corpus, "bicfrsng^.csv")
